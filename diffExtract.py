@@ -18,9 +18,9 @@ def enregistrer_diff(diff, output_file):
         file.writelines(diff)
 
 # Chemins vers les fichiers
-file1_path = r'C:\chemin\vers\file1.txt'  # Remplacez par le chemin de votre premier fichier
-file2_path = r'C:\chemin\vers\file2.txt'  # Remplacez par le chemin de votre second fichier
-output_file = r'C:\chemin\vers\output_diff.txt'  # Chemin pour sauvegarder les différences
+file1_path = r"C:\Users\hugop\Downloads\PS_LibreAcces_202504020841\1.txt"  # Remplacez par le chemin de votre premier fichier
+file2_path = r"C:\Users\hugop\Downloads\PS_LibreAcces_202504020841\2.txt"  # Remplacez par le chemin de votre second fichier
+output_file = r"C:\Users\hugop\Documents\projetSalome  # Chemin pour sauvegarder les différences
 
 # Trouver les différences et les enregistrer dans un fichier
 diff = trouver_diff(file1_path, file2_path)
