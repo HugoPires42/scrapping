@@ -20,7 +20,6 @@ def scrape_psychologues_lorraine():
     select_region.select_by_visible_text("Lorraine")
 
     # Lancer la recherche
-
     submit_buttons = driver.find_elements(By.CLASS_NAME, "champ_submit")
     submit_buttons[1].click() 
     
@@ -28,12 +27,20 @@ def scrape_psychologues_lorraine():
     
     # Extraction des résultats
     results = []
-    practitioners = driver.find_elements(By.CLASS_NAME, "result-card")
+    practitioners = driver.find_elements(By.CLASS_NAME, "contenant_resultat")  # Changer la classe pour "contenant_resultat"
     
     for practitioner in practitioners:
-        name = practitioner.find_element(By.CLASS_NAME, "result-name").text
-        address = practitioner.find_element(By.CLASS_NAME, "result-address").text
-        phone = practitioner.find_element(By.CLASS_NAME, "result-phone").text if practitioner.find_elements(By.CLASS_NAME, "result-phone") else "Non disponible"
+        # Extraire le nom
+        name_element = practitioner.find_element(By.CLASS_NAME, "nom_prenom")
+        name = name_element.text.strip() if name_element else "Non disponible"
+        
+        # Extraire l'adresse
+        address_element = practitioner.find_element(By.CLASS_NAME, "adresse")
+        address = address_element.text.strip() if address_element else "Non disponible"
+        
+        # Extraire le téléphone
+        phone_element = practitioner.find_element(By.CLASS_NAME, "tel")
+        phone = phone_element.text.strip() if phone_element else "Non disponible"
         
         results.append({
             "Nom": name,
