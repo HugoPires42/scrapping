@@ -2,7 +2,7 @@ import pandas as pd
 import re
 
 # Charger le fichier texte avec un séparateur '|'
-file_path = "C:/Users/hugop/Downloads/PS_LibreAcces_202504020841/PS_LibreAcces_Personne_activite_202504020841.txt"
+file_path = "C:/Users/hugop/Downloads/PS_LibreAcces_202504020841\PS_LibreAcces_Personne_activite_202504020841.txt"
 
 # Ouvrir le fichier et remplacer les séparateurs multiples par un seul '|'
 with open(file_path, 'r', encoding='utf-8') as file:
