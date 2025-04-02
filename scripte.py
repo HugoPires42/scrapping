@@ -20,7 +20,7 @@ def scrape_psychologues_lorraine():
     select_region.select_by_visible_text("Lorraine")
     
     # Lancer la recherche
-   search_button = driver.find_element(By.CLASS_NAME, "champ_submit")
+    search_button = driver.find_element(By.CLASS_NAME, "champ_submit")
     search_button.click()
     
     time.sleep(5)  # Attendre le chargement des résultats
