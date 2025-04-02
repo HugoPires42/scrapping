@@ -16,7 +16,7 @@ def scrape_psychologues_lorraine():
     select_profession.select_by_visible_text("Psychologue")
     
     # Sélection de la région "Lorraine"
-    select_region = Select(driver.find_element(By.ID, "critereRegion"))
+    select_region = Select(driver.find_element(By.ID, "Region"))
     select_region.select_by_visible_text("Lorraine")
     
     # Lancer la recherche
