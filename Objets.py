@@ -27,7 +27,7 @@ headers = [
 ]
 
 # Définir les départements à filtrer
-departements_vise = ['88', '57', '54']
+departements_vise = ['88', '57', '54']  # Vosges (88), Moselle (57), Meurthe-et-Moselle (54)
 
 # Fonction pour charger le fichier et créer la liste d'objets
 def load_data(file_path):
@@ -49,8 +49,9 @@ def load_data(file_path):
                 # Créer un dictionnaire avec les en-têtes comme clés et les valeurs comme valeurs
                 record = dict(zip(headers, values))
                 
-                # Vérifier si le "Code Département (structure)" est dans la liste des départements visés
-                if record.get("Code Département (structure)") in departements_vise:
+                # Vérifier si le "Code Département (structure)" commence par un des départements visés
+                code_departement = record.get("Code Département (structure)")
+                if any(code_departement.startswith(dept) for dept in departements_vise):
                     # Ajouter ce dictionnaire à la liste
                     data.append(record)
             else:
