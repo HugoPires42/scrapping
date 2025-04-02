@@ -1,3 +1,5 @@
+import pandas as pd
+
 # Définir les en-têtes (clés) pour les dictionnaires
 headers = [
     "Type d'identifiant PP", "Identifiant PP", "Identification nationale PP", 
@@ -66,6 +68,13 @@ file_path = r'C:\Users\hugop\Documents\projetSalome\data.txt'  # Remplacez par l
 # Charger les données depuis le fichier
 data = load_data(file_path)
 
-# Afficher les données filtrées
-for obj in data:
-    print(obj)
+# Créer un DataFrame à partir des données
+df = pd.DataFrame(data)
+
+# Spécifier le chemin où vous souhaitez enregistrer le fichier Excel
+output_file = r'C:\Users\hugop\Documents\projetSalome\data_filtrée.xlsx'  # Remplacez par le chemin désiré
+
+# Enregistrer les données dans un fichier Excel
+df.to_excel(output_file, index=False)
+
+print(f"Les données filtrées ont été enregistrées dans {output_file}")
