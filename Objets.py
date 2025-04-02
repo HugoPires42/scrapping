@@ -22,7 +22,7 @@ headers = [
     "Ancien identifiant de la structure", "Autorité d'enregistrement", 
     "Code secteur d'activité", "Libellé secteur d'activité", 
     "Code section tableau pharmaciens", "Libellé section tableau pharmaciens", 
-    "Code rôle", "Libellé rôle", "Code genre activité", "Libellé genre activité"
+    "Code rôle", "Libellé rôle", "Code genre activité", "Libellé genre activité","",
 ]
 
 # Fonction pour charger le fichier et créer la liste d'objets
