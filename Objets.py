@@ -50,7 +50,7 @@ def load_data(file_path):
                 record = dict(zip(headers, values))
                 
                 # Vérifier si le "Code Département (structure)" commence par un des départements visés
-                code_departement = record.get("Code Département (structure)")
+                code_departement = record.get("Code postal (coord. structure)")
                 if any(code_departement.startswith(dept) for dept in departements_vise):
                     # Ajouter ce dictionnaire à la liste
                     data.append(record)
