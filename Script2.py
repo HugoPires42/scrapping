@@ -1,7 +1,8 @@
 import pandas as pd
 
 # Charger le fichier texte
-file_path = "C:\Users\hugop\Downloads\PS_LibreAcces_202504020841\PS_LibreAcces_SavoirFaire_202504020841.txt"  # Remplacez par le chemin de votre fichier
+file_path = "C:/Users/hugop/Downloads/PS_LibreAcces_202504020841/PS_LibreAcces_SavoirFaire_202504020841.txt"
+
 df = pd.read_csv(file_path, sep='|', encoding='utf-8')
 
 # Exporter le DataFrame en fichier Excel
