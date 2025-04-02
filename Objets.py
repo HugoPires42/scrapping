@@ -22,8 +22,12 @@ headers = [
     "Ancien identifiant de la structure", "Autorité d'enregistrement", 
     "Code secteur d'activité", "Libellé secteur d'activité", 
     "Code section tableau pharmaciens", "Libellé section tableau pharmaciens", 
-    "Code rôle", "Libellé rôle", "Code genre activité", "Libellé genre activité","", #enlever ce dernier header si fichier 1 - fichier 2 ne fonctionne pas a cause du nombre de colonnes
+    "Code rôle", "Libellé rôle", "Code genre activité", "Libellé genre activité", 
+    "", # Enlever ce dernier header si fichier 1 - fichier 2 ne fonctionne pas à cause du nombre de colonnes
 ]
+
+# Définir les départements à filtrer
+departements_vise = ['88', '57', '54']
 
 # Fonction pour charger le fichier et créer la liste d'objets
 def load_data(file_path):
@@ -44,8 +48,11 @@ def load_data(file_path):
             if len(values) == len(headers):
                 # Créer un dictionnaire avec les en-têtes comme clés et les valeurs comme valeurs
                 record = dict(zip(headers, values))
-                # Ajouter ce dictionnaire à la liste
-                data.append(record)
+                
+                # Vérifier si le "Code Département (structure)" est dans la liste des départements visés
+                if record.get("Code Département (structure)") in departements_vise:
+                    # Ajouter ce dictionnaire à la liste
+                    data.append(record)
             else:
                 # Si les valeurs ne correspondent pas, afficher un message d'erreur
                 print(f"Erreur: La ligne suivante n'a pas le bon nombre de colonnes : {line}")
@@ -58,6 +65,6 @@ file_path = r'C:\Users\hugop\Documents\projetSalome\data.txt'  # Remplacez par l
 # Charger les données depuis le fichier
 data = load_data(file_path)
 
-# Afficher les données chargées
+# Afficher les données filtrées
 for obj in data:
     print(obj)
