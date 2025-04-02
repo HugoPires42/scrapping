@@ -1,7 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-from selenium.webdriver.common.keys import Keys
 import time
 
 def scrape_psychologues_lorraine():
@@ -25,31 +24,45 @@ def scrape_psychologues_lorraine():
     
     time.sleep(5)  # Attendre le chargement des résultats
     
-    # Extraction des résultats
-    results = []
-    practitioners = driver.find_elements(By.CLASS_NAME, "contenant_resultat")  # Changer la classe pour "contenant_resultat"
+    # Liste des résultats
+    all_results = []
     
-    for practitioner in practitioners:
-        # Extraire le nom
-        name_element = practitioner.find_element(By.CLASS_NAME, "nom_prenom")
-        name = name_element.text.strip() if name_element else "Non disponible"
+    # Récupérer les résultats de chaque page
+    while True:
+        # Extraction des résultats de la page actuelle
+        practitioners = driver.find_elements(By.CLASS_NAME, "contenant_resultat")
+        for practitioner in practitioners:
+            # Extraire le nom
+            name_element = practitioner.find_element(By.CLASS_NAME, "nom_prenom")
+            name = name_element.text.strip() if name_element else "Non disponible"
+            
+            # Extraire l'adresse
+            address_element = practitioner.find_element(By.CLASS_NAME, "adresse")
+            address = address_element.text.strip() if address_element else "Non disponible"
+            
+            # Extraire le téléphone
+            phone_element = practitioner.find_element(By.CLASS_NAME, "tel")
+            phone = phone_element.text.strip() if phone_element else "Non disponible"
+            
+            all_results.append({
+                "Nom": name,
+                "Adresse": address,
+                "Téléphone": phone
+            })
         
-        # Extraire l'adresse
-        address_element = practitioner.find_element(By.CLASS_NAME, "adresse")
-        address = address_element.text.strip() if address_element else "Non disponible"
-        
-        # Extraire le téléphone
-        phone_element = practitioner.find_element(By.CLASS_NAME, "tel")
-        phone = phone_element.text.strip() if phone_element else "Non disponible"
-        
-        results.append({
-            "Nom": name,
-            "Adresse": address,
-            "Téléphone": phone
-        })
+        # Vérifier si le bouton "Suivant" est présent et cliquable
+        try:
+            next_button = driver.find_element(By.CLASS_NAME, "bt_suivant").find_element(By.TAG_NAME, "a")
+            if next_button:
+                next_button.click()  # Clique sur "Suivant"
+                time.sleep(5)  # Attendre que la nouvelle page se charge
+            else:
+                break  # Si le bouton n'est pas trouvé, arrêter le scraping
+        except:
+            break  # Si une exception se produit (par exemple, si le bouton n'est plus présent), arrêter
     
     driver.quit()
-    return results
+    return all_results
 
 # Exécution du script
 psychologues = scrape_psychologues_lorraine()
