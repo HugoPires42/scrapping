@@ -3,8 +3,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 # Exemple d'URL (à ajuster selon vos critères de recherche)
-url = 'https://www.pagesjaunes.fr/recherche/'
-
+url = 'https://www.pagesjaunes.fr/annuaire/chercherlespros?quoiqui=Psychologue&ou=Moselle+%2857%29&univers=pagesjaunes&idOu='
 # Envoyer une requête GET pour récupérer le contenu de la page
 response = requests.get(url)
 soup = BeautifulSoup(response.text, 'html.parser')
