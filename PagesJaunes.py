@@ -40,7 +40,19 @@ find_button.click()
 # Attendre un peu pour voir le résultat de la recherche
 time.sleep(5)
 
-# Optionnel : Si tu veux récupérer le HTML de la page de résultats
+# Trouver et cliquer sur le lien "Lorraine"
+try:
+    # Attendre que le lien "Lorraine" soit cliquable
+    lorraine_link = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[@title='Lorraine']")))
+    lorraine_link.click()
+    print("Lien 'Lorraine' cliqué.")
+except Exception as e:
+    print(f"Erreur lors du clic sur le lien 'Lorraine' : {e}")
+
+# Attendre un peu pour voir les résultats après le clic
+time.sleep(5)
+
+# Optionnel : Récupérer le HTML de la page de résultats
 html = driver.page_source
 print(html)
 
