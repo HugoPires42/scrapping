@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-# Initialiser le WebDriver (ici avec Chrome)
+# Initialiser lee WebDriver (ici avec Chrome)
 driver = webdriver.Chrome()
 
 # Accéder à la page des Pages Jaunes
