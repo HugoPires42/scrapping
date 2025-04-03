@@ -1,40 +1,35 @@
-import requests
-from bs4 import BeautifulSoup
-import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+import time
 
-# Exemple d'URL (à ajuster selon vos critères de recherche)
-url = 'https://www.pagesjaunes.fr/annuaire/chercherlespros?quoiqui=Psychologue&ou=Moselle+%2857%29&univers=pagesjaunes&idOu='
-# Envoyer une requête GET pour récupérer le contenu de la page
-response = requests.get(url)
-soup = BeautifulSoup(response.text, 'html.parser')
+# Initialiser le WebDriver (ici avec Chrome)
+driver = webdriver.Chrome()
 
-# Trouver les éléments contenant les informations sur les praticiens
-results = []
+# Accéder à la page des Pages Jaunes
+driver.get("https://www.pagesjaunes.fr/")
 
-# Extraire le nom et l'adresse des psychologues
-for item in soup.find_all('h3', {'kameleoonlistener-ovxt': 'true'}):
-    # Le nom du psychologue est dans la balise <h3>
-    name = item.text.strip()
-    
-    # L'adresse et le lien vers la carte sont dans la balise <a> juste après
-    address_tag = item.find_next('a', {'class': 'pj-lb pj-link'})
-    
-    # Extraire l'adresse et la valeur du lien pour la carte
-    if address_tag:
-        address = address_tag.text.strip()
-        link = address_tag['href']
-    else:
-        address = 'N/A'
-        link = 'N/A'
-    
-    # Ajouter les informations dans la liste des résultats
-    results.append({'Name': name, 'Address': address, 'Link': link})
+# Attendre un peu que la page se charge
+time.sleep(3)
 
-# Convertir les résultats en DataFrame pour une meilleure lisibilité
-df = pd.DataFrame(results)
+# Trouver le champ pour "quoi" (Psychologue)
+quoi_field = driver.find_element(By.ID, "quoiqui")
+quoi_field.send_keys("psychologue")  # Renseigner "psychologue"
 
-# Afficher les résultats
-print(df)
+# Trouver le champ pour "où" (Lorraine)
+ou_field = driver.find_element(By.ID, "ou")
+ou_field.send_keys("Lorraine")  # Renseigner "Lorraine"
 
-# Sauvegarder dans un fichier CSV si nécessaire
-df.to_csv('pages_jaunes_psychologues.csv', index=False)
+# Trouver et cliquer sur le bouton "Trouver"
+find_button = driver.find_element(By.ID, "findId")
+find_button.click()
+
+# Attendre un peu pour voir le résultat de la recherche
+time.sleep(5)
+
+# Optionnel : Si tu veux récupérer le HTML de la page de résultats
+html = driver.page_source
+print(html)
+
+# Fermer le navigateur
+driver.quit()
