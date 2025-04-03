@@ -40,7 +40,7 @@ find_button.click()
 # Attendre un peu pour voir le résultat de la recherche
 time.sleep(5)
 
-# Trouver et cliquer sur le lien "Lorraine"
+# Trouver et cliquer sur le flien "Lorraine"
 try:
     # Attendre que le lien "Lorraine" soit cliquable
     lorraine_link = wait.until(EC.element_to_be_clickable((By.XPATH, "//a[@title='Lorraine']")))
