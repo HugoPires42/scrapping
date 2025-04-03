@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 # Exemple d'URL (à ajuster selon vos critères de recherche)
-url = 'https://www.pagesjaunes.fr/annuaire/chercherlespros?quoiqui=Psychologue&ou=Moselle+%2857%29&univers=pagesjaunes&idOu='
+url = 'https://www.pagesjaunes.fr/recherche/'
 
 # Envoyer une requête GET pour récupérer le contenu de la page
 response = requests.get(url)
@@ -11,12 +11,25 @@ soup = BeautifulSoup(response.text, 'html.parser')
 
 # Trouver les éléments contenant les informations sur les praticiens
 results = []
-for item in soup.find_all('div', class_='bi-bloc'):  # La classe à ajuster en fonction de la structure du site
-    name = item.find('a', class_='denomination').text.strip() if item.find('a', class_='denomination') else 'N/A'
-    address = item.find('p', class_='adresse').text.strip() if item.find('p', class_='adresse') else 'N/A'
-    phone = item.find('p', class_='numero').text.strip() if item.find('p', class_='numero') else 'N/A'
+
+# Extraire le nom et l'adresse des psychologues
+for item in soup.find_all('h3', {'kameleoonlistener-ovxt': 'true'}):
+    # Le nom du psychologue est dans la balise <h3>
+    name = item.text.strip()
     
-    results.append({'Name': name, 'Address': address, 'Phone': phone})
+    # L'adresse et le lien vers la carte sont dans la balise <a> juste après
+    address_tag = item.find_next('a', {'class': 'pj-lb pj-link'})
+    
+    # Extraire l'adresse et la valeur du lien pour la carte
+    if address_tag:
+        address = address_tag.text.strip()
+        link = address_tag['href']
+    else:
+        address = 'N/A'
+        link = 'N/A'
+    
+    # Ajouter les informations dans la liste des résultats
+    results.append({'Name': name, 'Address': address, 'Link': link})
 
 # Convertir les résultats en DataFrame pour une meilleure lisibilité
 df = pd.DataFrame(results)
@@ -26,4 +39,3 @@ print(df)
 
 # Sauvegarder dans un fichier CSV si nécessaire
 df.to_csv('pages_jaunes_psychologues.csv', index=False)
-
